@@ -6,8 +6,7 @@ USE Investimentos;
 
 CREATE TABLE ativos (
     ativo_id INT NOT NULL auto_increment,
-    codAtivo INT NOT NULL,
-    nomeAtivo VARCHAR(5) NOT NULL,
+    codAtivo VARCHAR(5) NOT NULL,
     qtdeAtivo INT NOT NULL,
     valor DECIMAL(7,2) NOT NULL,
     PRIMARY KEY(ativo_id)
@@ -44,11 +43,11 @@ CREATE TABLE carteiras (
 
 SET SQL_SAFE_UPDATES = 0;
 
-INSERT INTO Investimentos.ativos (codAtivo, nomeAtivo, qtdeAtivo, valor) VALUES
-    (1510, "PETR4", 1500, 28.48 ),
-    (2510, "VALE3", 2500, 68.73),
-    (3510, "XPTO", 1800, 350),
-    (4510, "AZUL4", 1000, 12.26);
+INSERT INTO Investimentos.ativos (codAtivo, qtdeAtivo, valor) VALUES
+    ("PETR4", 1500, 28.48 ),
+    ("VALE3", 2500, 68.73),
+    ("XPTO", 1800, 350),
+    ("AZUL4", 1000, 12.26);
 
 INSERT INTO Investimentos.clientes (codCliente) VALUES
     (1515),
