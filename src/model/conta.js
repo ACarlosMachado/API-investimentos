@@ -17,6 +17,16 @@ const getContaModel = async (codCliente) => {
     return result[0];
 };
 
+const postContaDeposito = async (codCliente, valor) => {
+    const clienteId =  await getIdCliente(codCliente);
+    const queryDeposito = (`UPDATE Investimentos.carteiras
+    SET saldo = (saldo + (?))
+    WHERE cliente_id = (?)`);
+    await connection.execute(queryDeposito, [valor, clienteId]);
+    // return { message: 'Deposito realizado com sucesso' }
+};
+
 module.exports = {
     getContaModel,
+    postContaDeposito
 }

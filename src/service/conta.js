@@ -1,4 +1,4 @@
-const { getContaModel } = require('../model/conta');
+const { getContaModel, postContaDeposito } = require('../model/conta');
 
 const getContaService = async (req) => {
     try {
@@ -11,6 +11,18 @@ const getContaService = async (req) => {
     }
 };
 
+const postDepositoService = async (req) => {
+    try {
+        const { codCliente, valor } = req.body;
+        await postContaDeposito(codCliente, valor);
+        console.log('aqui===', postDeposito);
+        // return postDeposito;    
+    } catch (error) {
+        return error
+    }
+}
+
 module.exports = {
-    getContaService
+    getContaService,
+    postDepositoService
 }
