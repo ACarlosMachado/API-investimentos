@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { validaAtivo } = require('../middlewares/validateAtivos');
+const { validaAtivo } = require('../middlewares/validaCodAtivo');
 const { getAtivoController } = require('../controller/ativos');
 
 const ativos = Router();
