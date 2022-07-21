@@ -10,9 +10,13 @@ const addOrdemCompra = async (req, res, next) => {
     }
 }
 
-const addOrdemVenda = async (req, res) => {
-    const { code, message } = await addOrdemVendaService(req);
-    res.status(code).json({ message });
+const addOrdemVenda = async (req, res, next) => {
+    try {
+        const { code, message } = await addOrdemVendaService(req);
+        res.status(code).json({ message });        
+    } catch (error) {
+        next(err)
+    }
 }
 
 module.exports = { addOrdemCompra, addOrdemVenda };
