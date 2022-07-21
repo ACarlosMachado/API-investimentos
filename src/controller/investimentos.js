@@ -1,18 +1,17 @@
-const { addOrdemCompraService } = require('../service/investimentos');
+const { addOrdemCompraService } = require('../service/investimentos')
 
-const addOrdemCompra = async (req, res) => {
+const addOrdemCompra = async (req, res, next) => {
     try {
-        const ordemCompraService = await addOrdemCompraService(req);    
-        res.status(200).json(ordemCompraService);
+        const { code, message } = await addOrdemCompraService(req);
+        res.status(code).json({ message });
         
-    } catch (error) {
-        res.status(500).json({ message: error });
+    } catch (err) {
+        next(err);
     }
 }
 
 const addOrdemVenda = async (req, res) => {
     const ordemVendaService = await addOrdemVendaService(req);
-
     res.status(200).json({ message: 'OK' });
 }
 
