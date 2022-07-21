@@ -5,6 +5,6 @@ const { validaOrdem } = require('../middlewares/validateOrdem');
 const investimentos = Router();
 
 investimentos.post('/investimentos/comprar', validaOrdem, addOrdemCompra);
-investimentos.get('/investimentos/vender', validaOrdem, addOrdemVenda);
+investimentos.post('/investimentos/vender', validaOrdem, addOrdemVenda);
 
 module.exports = { investimentos };

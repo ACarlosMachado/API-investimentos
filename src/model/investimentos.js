@@ -13,11 +13,28 @@ const getIdAtivo = async (codAtivo) => {
     return ativoId;
 };
 
+const getIdCarteiraAtivo = async (clienteId, ativoId) => {
+    const [result] = await connection.execute(`SELECT carteira_ativos_id AS id
+     FROM Investimentos.carteira_ativos WHERE cliente_id = (?) AND ativo_id = (?)`, 
+     [clienteId, ativoId]);
+     const { id } = result[0];
+     return id;
+}
+
 const getQtdeAtivo = async (codAtivo) => {
     const query = (`SELECT qtdeAtivo FROM Investimentos.ativos WHERE codAtivo = (?)`);
     const [qtde] = await connection.execute(query, [codAtivo]);
     const { qtdeAtivo } = qtde[0];
     return qtdeAtivo;
+};
+
+const getQtdeAtivoCliente = async (codAtivo, codCliente) => {
+    const clienteId = await getIdCliente(codCliente);
+    const ativoId = await getIdAtivo(codAtivo);
+    const query = (`SELECT qtdeAtivo AS qtdeAtv FROM Investimentos.carteira_ativos WHERE cliente_id = 1 AND ativo_id = 1;`);
+    const [qtde] = await connection.execute(query, [clienteId, ativoId, codAtivo]);
+    const { qtdeAtv } = qtde[0];
+    return qtdeAtv;
 };
 
 const postCompraModel = async (codAtivo, codCliente, qtdeAtivo) => {    
@@ -28,7 +45,19 @@ const postCompraModel = async (codAtivo, codCliente, qtdeAtivo) => {
     return { code: 201, message: 'Compra realizada' }
 };
 
+const postVendaModel = async (codAtivo, codCliente, qtdeAtivoVenda) => {
+    const clienteId = await getIdCliente(codCliente);
+    const ativoId = await getIdAtivo(codAtivo);
+    const carteiraAtivoId = await getIdCarteiraAtivo(ativoId, clienteId);
+    await connection.execute(`UPDATE Investimentos.carteira_ativos
+    SET qtdeAtivo = (qtdeAtivo - (?))
+    WHERE carteira_ativos_id = (?)`, [qtdeAtivoVenda, carteiraAtivoId]);
+    return { code: 201, message: 'Venda realizada' }
+};
+
 module.exports = {
     postCompraModel,
-    getQtdeAtivo
+    postVendaModel,
+    getQtdeAtivo,
+    getQtdeAtivoCliente,
 }
