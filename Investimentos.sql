@@ -15,6 +15,8 @@ CREATE TABLE ativos (
 CREATE TABLE clientes (
     cliente_id INT NOT NULL auto_increment,
     codCliente INT NOT NULL,
+    email VARCHAR(25),
+    senha VARCHAR(16),
     PRIMARY KEY(cliente_id)
 ) ENGINE=INNODB;
 
@@ -49,11 +51,11 @@ INSERT INTO Investimentos.ativos (codAtivo, qtdeAtivo, valor) VALUES
     ("XPTO", 1800, 350),
     ("AZUL4", 1000, 12.26);
 
-INSERT INTO Investimentos.clientes (codCliente) VALUES
-    (1515),
-    (2515),
-    (7890),
-    (4510);
+INSERT INTO Investimentos.clientes (codCliente, email, senha) VALUES
+    (1111, "cliente1@email.com", "123456"),
+    (2222, "cliente2@email.com", "123456"),
+    (3333, "cliente3@email.com", "123456"),
+    (4444, "cliente4@email.com", "123456");
 
 INSERT INTO Investimentos.carteira_ativos (ativo_id, cliente_id, qtdeAtivo) VALUES
     (1, 1, 50),
