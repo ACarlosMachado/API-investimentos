@@ -1,4 +1,4 @@
-const { getAtivoService } = require('../service/ativos');
+const { getAtivoService, getAtivosByClienteService  } = require('../service/ativos');
  
 const getAtivoController = async (req, res, next) => {
     try {
@@ -9,4 +9,13 @@ const getAtivoController = async (req, res, next) => {
     }
 };
 
-module.exports = { getAtivoController };
+const getAtivosByCliente = async (req, res, next) => {
+    try {
+        const getService = await getAtivosByClienteService(req);
+        res.status(200).json(getService);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = { getAtivoController, getAtivosByCliente };

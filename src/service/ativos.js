@@ -1,4 +1,4 @@
-const { getAtivosByCod } = require('../model/ativos');
+const { getAtivosByCod, getAtivosByCliente } = require('../model/ativos');
 
 const getAtivoService = async (req) => {
     try {
@@ -10,4 +10,14 @@ const getAtivoService = async (req) => {
     }
 };
 
-module.exports = { getAtivoService };
+const getAtivosByClienteService = async (req) => {
+    try {
+        const { id } = req.params;
+        const getAtivosClienteModel = await getAtivosByCliente(id);
+        return getAtivosClienteModel;
+    } catch (error) {
+        return error;
+    }
+};
+
+module.exports = { getAtivoService, getAtivosByClienteService };
