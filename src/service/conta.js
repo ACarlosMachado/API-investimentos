@@ -1,4 +1,4 @@
-const { getContaModel, postContaDeposito } = require('../model/conta');
+const { getContaModel, postContaDeposito, getSaldoConta, postContaSaque, getIdCliente } = require('../model/conta');
 
 const getContaService = async (req) => {
     try {
@@ -20,9 +20,25 @@ const postDepositoService = async (req) => {
     } catch (error) {
         return error
     }
-}
+};
+
+const postSaqueService = async (req) => {
+    try {
+        const { codCliente, valor } = req.body;
+        const idCliente = await getIdCliente(codCliente);
+        const verificaSaldo = await getSaldoConta(idCliente);
+        if (verificaSaldo < valor ) {
+            return { code: 422, message: 'Saldo insuficiente' }
+        }
+        await postContaSaque(codCliente, valor);
+        return { code: 200, message: 'Saque realizado com sucesso!' }        
+    } catch (error) {
+        return error;
+    }
+};
 
 module.exports = {
     getContaService,
-    postDepositoService
+    postDepositoService,
+    postSaqueService
 }

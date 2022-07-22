@@ -17,16 +17,33 @@ const getContaModel = async (codCliente) => {
     return result[0];
 };
 
+const getSaldoConta = async (idCliente) => {
+    const querySaldo = (`SELECT saldo FROM Investimentos.carteiras WHERE cliente_id = (?)`);
+    const [saldoDisponivel] = await connection.execute(querySaldo, [idCliente]);
+    const { saldo } = saldoDisponivel[0];
+    return saldo;
+};
+
 const postContaDeposito = async (codCliente, valor) => {
     const clienteId =  await getIdCliente(codCliente);
     const queryDeposito = (`UPDATE Investimentos.carteiras
     SET saldo = (saldo + (?))
     WHERE cliente_id = (?)`);
     await connection.execute(queryDeposito, [valor, clienteId]);
-    // return { message: 'Deposito realizado com sucesso' }
+};
+
+const postContaSaque = async (codCliente, valor) => {
+    const clienteId =  await getIdCliente(codCliente);
+    const queryDeposito = (`UPDATE Investimentos.carteiras
+    SET saldo = (saldo - (?))
+    WHERE cliente_id = (?)`);
+    await connection.execute(queryDeposito, [valor, clienteId]);
 };
 
 module.exports = {
+    getIdCliente,
     getContaModel,
-    postContaDeposito
+    getSaldoConta,
+    postContaDeposito,
+    postContaSaque
 }

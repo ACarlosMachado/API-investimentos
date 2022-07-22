@@ -1,4 +1,4 @@
-const { getContaService, postDepositoService } = require('../service/conta');
+const { getContaService, postDepositoService, postSaqueService } = require('../service/conta');
 
 const getContaController = async (req, res, next) => {
     try {
@@ -18,7 +18,17 @@ const postDepositoController = async (req, res, next) => {
     }
 };
 
+const postSaqueController = async (req, res, next) => {
+    try {
+        const { code, message } = await postSaqueService(req);
+        res.status(code).json(message);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getContaController,
-    postDepositoController
+    postDepositoController,
+    postSaqueController
 }
