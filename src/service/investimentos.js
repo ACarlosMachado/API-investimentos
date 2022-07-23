@@ -5,7 +5,8 @@ const {
     postVendaModel,
     getSaldoCliente,
     putSaldoCliente,
-    getQtdeAtivoCliente } = require('../model/investimentos');
+    getQtdeAtivoCliente,
+    pustSaldoCLienteVenda } = require('../model/investimentos');
 
 const verificaQtdeAtivo = async (codAtivo, ordem, codCliente) => {
     try {
@@ -70,10 +71,11 @@ const addOrdemVendaService = async (req) => {
         const verificaQtdeDisponivelVenda = await verificaQtdeAtivo(codAtivo, 'venda', codCliente);
         if (verificaQtdeDisponivelVenda < qtdeAtivo) {
             return { code: 422, message: 'Quantidade de ativo indisponível' };
-        } else {
-            const postCompra = await postVendaModel(codAtivo, codCliente, qtdeAtivo);
-            return postCompra;
         }
+        const valorVenda = await valorOrdem(req);
+        await pustSaldoCLienteVenda(valorVenda, codCliente);
+        const postCompra = await postVendaModel(codAtivo, codCliente, qtdeAtivo);
+        return postCompra;
         
     } catch (error) {
         return error;

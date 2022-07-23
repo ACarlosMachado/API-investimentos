@@ -76,8 +76,14 @@ const putSaldoCliente = async (custo, codCliente) => {
     const x = await connection.execute(`UPDATE Investimentos.carteiras AS carteira SET saldo = (saldo - (?)) WHERE carteira.cliente_id = (?)`, [custo, idCliente]);
 };
 
+const pustSaldoCLienteVenda = async (custo, codCliente) => {
+    const idCliente = await getIdCliente(codCliente);
+    const x = await connection.execute(`UPDATE Investimentos.carteiras AS carteira SET saldo = (saldo + (?)) WHERE carteira.cliente_id = (?)`, [custo, idCliente]);
+};
+
 module.exports = {
     putSaldoCliente,
+    pustSaldoCLienteVenda,
     postCompraModel,
     postVendaModel,
     getQtdeAtivo,
