@@ -1,6 +1,10 @@
-const { postCompraModel,
-    getQtdeAtivo, 
-    postVendaModel, 
+const {
+    postCompraModel,
+    getQtdeAtivo,
+    getValorAtivo,
+    postVendaModel,
+    getSaldoCliente,
+    putSaldoCliente,
     getQtdeAtivoCliente } = require('../model/investimentos');
 
 const verificaQtdeAtivo = async (codAtivo, ordem, codCliente) => {
@@ -14,7 +18,32 @@ const verificaQtdeAtivo = async (codAtivo, ordem, codCliente) => {
     } catch (error) {
         return error;
     }
-}
+};
+
+const valorOrdem = async (req) => {
+    try {
+        const { codAtivo, qtdeAtivo } = req.body;
+        const { valorAtivo } = await getValorAtivo(codAtivo);
+        const valorAtivoNumber = parseFloat(valorAtivo); 
+        return (valorAtivoNumber * qtdeAtivo);
+    } catch (error) {
+        return error;
+    }
+};
+
+const verificaSaldo = async (req) => {
+    try {
+        const { codCliente } = req.body;
+        const custoOrdem = await valorOrdem(req); 
+        const saldoDisponivel = await getSaldoCliente(codCliente);
+        const { saldo } = saldoDisponivel;
+        const saldoNumber = parseFloat(saldo);
+        if (custoOrdem > saldoNumber ) return { code: 422, message: 'saldo insuficiente' }
+        return { custo: custoOrdem };
+    } catch (error) {
+        return error;
+    }
+};
 
 const addOrdemCompraService = async (req) => {
     try {
@@ -22,10 +51,13 @@ const addOrdemCompraService = async (req) => {
         const verificaQtdeDisponivel = await verificaQtdeAtivo(codAtivo, 'compra');
         if (verificaQtdeDisponivel < qtdeAtivo) {
             return { code: 422, message: 'Quantidade de ativo indisponível' };
-        } else {
-            const postCompra = await postCompraModel(codAtivo, codCliente, qtdeAtivo);
-            return postCompra;
         }
+        const { code, message, custo } = await verificaSaldo(req);
+        if (code) return { code, message }
+        await putSaldoCliente(custo, codCliente);
+        const postCompra = await postCompraModel(codAtivo, codCliente, qtdeAtivo, custo); 
+        return postCompra;
+
         
     } catch (error) {
         return error;
@@ -52,4 +84,4 @@ module.exports = {
     addOrdemCompraService,
     addOrdemVendaService,
     verificaQtdeAtivo
-}
+};

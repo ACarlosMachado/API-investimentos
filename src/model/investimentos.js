@@ -1,5 +1,11 @@
 const connection = require('./connection');
 
+const getValorAtivo = async (codAtivo) => {
+    const [result] = await connection.execute(`
+    SELECT valor AS valorAtivo FROM Investimentos.ativos WHERE codAtivo = (?)`, [codAtivo]);
+    return result[0];
+};
+
 const getIdCliente = async (codCliente) => {
     const [idCliente] = await connection.execute(`SELECT cliente_id AS id FROM Investimentos.clientes
     WHERE codCliente = (?)`, [codCliente]);
@@ -37,6 +43,16 @@ const getQtdeAtivoCliente = async (codAtivo, codCliente) => {
     return qtdeAtv;
 };
 
+const getSaldoCliente = async (codCliente) => {
+    const [saldo] = await connection.execute(`
+        SELECT
+        C.saldo AS saldo
+    FROM Investimentos.carteiras AS C
+    INNER JOIN Investimentos.clientes clt ON clt.cliente_id = C.cliente_id
+    WHERE clt.codCliente = (?)`, [codCliente]);
+    return saldo[0];
+};
+
 const postCompraModel = async (codAtivo, codCliente, qtdeAtivo) => {    
     const clienteId = await getIdCliente(codCliente);
     const ativoId = await getIdAtivo(codAtivo);
@@ -55,9 +71,17 @@ const postVendaModel = async (codAtivo, codCliente, qtdeAtivoVenda) => {
     return { code: 201, message: 'Venda realizada' }
 };
 
+const putSaldoCliente = async (custo, codCliente) => {
+    const idCliente = await getIdCliente(codCliente);
+    const x = await connection.execute(`UPDATE Investimentos.carteiras AS carteira SET saldo = (saldo - (?)) WHERE carteira.cliente_id = (?)`, [custo, idCliente]);
+};
+
 module.exports = {
+    putSaldoCliente,
     postCompraModel,
     postVendaModel,
     getQtdeAtivo,
+    getValorAtivo,
+    getSaldoCliente,
     getQtdeAtivoCliente,
 }
