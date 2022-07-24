@@ -21,3 +21,13 @@ Uma API é do tipo RESTful que utiliza Express(Node.js), a arquitetura MSC (mode
 - Instale as dependências: `npm install`
 - Execute o docker: `docker-compose up -d`
 - Execute o script de Investimentos.sql no workbench
+- Execute a aplicação: `npm run debug` ou `npm start`
+
+## Ferramentas e tecnologias utilizadas no desenvolvimento
+- Express (node.js);
+- Nodemon;
+- Joi (validador de dados para JavaScript);
+- JWT (criação e validação de token);
+- Eslint;
+- Mysql;
+- Docker;
