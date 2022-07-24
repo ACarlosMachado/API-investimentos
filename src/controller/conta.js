@@ -5,7 +5,7 @@ const getContaController = async (req, res, next) => {
         const getConta = await getContaService(req);
         return res.status(201).json(getConta);
     } catch (error) {
-        next(error)
+        next(error);
     }
 };
 
@@ -30,5 +30,5 @@ const postSaqueController = async (req, res, next) => {
 module.exports = {
     getContaController,
     postDepositoController,
-    postSaqueController
-}
+    postSaqueController,
+};

@@ -6,7 +6,7 @@ const getAtivoService = async (req) => {
         const getAtivoModel = await getAtivosByCod(id);
         return getAtivoModel;        
     } catch (error) {
-        return error
+        return error;
     }
 };
 

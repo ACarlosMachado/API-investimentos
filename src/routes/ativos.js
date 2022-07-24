@@ -7,6 +7,6 @@ const { getAtivoController, getAtivosByCliente } = require('../controller/ativos
 const ativos = Router();
 
 ativos.get('/ativos/:id', validaAtivo, getAtivoController);
-ativos.get('/ativos/clientes/:id', validaJwt, validaCodCliente, getAtivosByCliente)
+ativos.get('/ativos/clientes/:id', validaJwt, validaCodCliente, getAtivosByCliente);
 
 module.exports = { ativos };

@@ -12,7 +12,7 @@ const verificaQtdeAtivo = async (codAtivo, ordem, codCliente) => {
     try {
         if (ordem === 'compra') {
             const verificaQtde = await getQtdeAtivo(codAtivo);
-            return verificaQtde
+            return verificaQtde;
         }
         const veficaQtdeAtivoCliente = await getQtdeAtivoCliente(codAtivo, codCliente);
         return veficaQtdeAtivoCliente;
@@ -39,7 +39,7 @@ const verificaSaldo = async (req) => {
         const saldoDisponivel = await getSaldoCliente(codCliente);
         const { saldo } = saldoDisponivel;
         const saldoNumber = parseFloat(saldo);
-        if (custoOrdem > saldoNumber ) return { code: 422, message: 'saldo insuficiente' }
+        if (custoOrdem > saldoNumber) return { code: 422, message: 'saldo insuficiente' };
         return { custo: custoOrdem };
     } catch (error) {
         return error;
@@ -54,12 +54,10 @@ const addOrdemCompraService = async (req) => {
             return { code: 422, message: 'Quantidade de ativo indisponível' };
         }
         const { code, message, custo } = await verificaSaldo(req);
-        if (code) return { code, message }
+        if (code) return { code, message };
         await putSaldoCliente(custo, codCliente);
         const postCompra = await postCompraModel(codAtivo, codCliente, qtdeAtivo, custo); 
         return postCompra;
-
-        
     } catch (error) {
         return error;
     }
@@ -75,8 +73,7 @@ const addOrdemVendaService = async (req) => {
         const valorVenda = await valorOrdem(req);
         await pustSaldoCLienteVenda(valorVenda, codCliente);
         const postCompra = await postVendaModel(codAtivo, codCliente, qtdeAtivo);
-        return postCompra;
-        
+        return postCompra;        
     } catch (error) {
         return error;
     }
@@ -85,5 +82,5 @@ const addOrdemVendaService = async (req) => {
 module.exports = { 
     addOrdemCompraService,
     addOrdemVendaService,
-    verificaQtdeAtivo
+    verificaQtdeAtivo,
 };

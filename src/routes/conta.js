@@ -2,7 +2,9 @@ const { Router } = require('express');
 const { validaCodCliente } = require('../middlewares/validaCodCliente');
 const { validaConta } = require('../middlewares/validaConta');
 const { validaJwt } = require('../middlewares/ValidaAutenticacao');
-const { getContaController, postDepositoController, postSaqueController } = require('../controller/conta');
+const { getContaController,
+      postDepositoController,
+      postSaqueController } = require('../controller/conta');
 
 const conta = Router();
 

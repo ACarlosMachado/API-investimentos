@@ -1,5 +1,5 @@
 const express = require('express');
-const  { investimentos } = require('./routes/investimentos');
+const { investimentos } = require('./routes/investimentos');
 const { ativos } = require('./routes/ativos');
 const { conta } = require('./routes/conta');
 const { login } = require('./routes/login');
@@ -14,4 +14,4 @@ app.use(ativos);
 app.use(conta);
 app.use(errorHandler);
 
-module.exports = { app }
+module.exports = { app };

@@ -8,10 +8,6 @@ const getCliente = async (email, senha) => {
     return result;
 };
 
-// const postLoginModel = async () => {
-
-// };
-
 module.exports = {
-    getCliente
-}
+    getCliente,
+};

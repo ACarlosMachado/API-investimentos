@@ -7,14 +7,15 @@ const getValorAtivo = async (codAtivo) => {
 };
 
 const getIdCliente = async (codCliente) => {
-    const [idCliente] = await connection.execute(`SELECT cliente_id AS id FROM Investimentos.clientes
-    WHERE codCliente = (?)`, [codCliente]);
+    const [idCliente] = await connection.execute(`SELECT cliente_id AS id 
+    FROM Investimentos.clientes WHERE codCliente = (?)`, [codCliente]);
     const { id } = idCliente[0];
     return id;
 };
 
 const getIdAtivo = async (codAtivo) => {
-    const [idAtivo] = await connection.execute(`SELECT ativo_id AS ativoId FROM Investimentos.ativos WHERE codAtivo = (?)`, [codAtivo]);
+    const [idAtivo] = await connection.execute(`SELECT ativo_id AS ativoId 
+    FROM Investimentos.ativos WHERE codAtivo = (?)`, [codAtivo]);
     const { ativoId } = idAtivo[0];
     return ativoId;
 };
@@ -25,10 +26,10 @@ const getIdCarteiraAtivo = async (clienteId, ativoId) => {
      [clienteId, ativoId]);
      const { id } = result[0];
      return id;
-}
+};
 
 const getQtdeAtivo = async (codAtivo) => {
-    const query = (`SELECT qtdeAtivo FROM Investimentos.ativos WHERE codAtivo = (?)`);
+    const query = ('SELECT qtdeAtivo FROM Investimentos.ativos WHERE codAtivo = (?)');
     const [qtde] = await connection.execute(query, [codAtivo]);
     const { qtdeAtivo } = qtde[0];
     return qtdeAtivo;
@@ -37,7 +38,8 @@ const getQtdeAtivo = async (codAtivo) => {
 const getQtdeAtivoCliente = async (codAtivo, codCliente) => {
     const clienteId = await getIdCliente(codCliente);
     const ativoId = await getIdAtivo(codAtivo);
-    const query = (`SELECT qtdeAtivo AS qtdeAtv FROM Investimentos.carteira_ativos WHERE cliente_id = 1 AND ativo_id = 1;`);
+    const query = (`SELECT qtdeAtivo AS qtdeAtv 
+    FROM Investimentos.carteira_ativos WHERE cliente_id = 1 AND ativo_id = 1;`);
     const [qtde] = await connection.execute(query, [clienteId, ativoId, codAtivo]);
     const { qtdeAtv } = qtde[0];
     return qtdeAtv;
@@ -56,9 +58,10 @@ const getSaldoCliente = async (codCliente) => {
 const postCompraModel = async (codAtivo, codCliente, qtdeAtivo) => {    
     const clienteId = await getIdCliente(codCliente);
     const ativoId = await getIdAtivo(codAtivo);
-    const query = (`INSERT INTO Investimentos.carteira_ativos (cliente_id, ativo_id, qtdeAtivo) VALUES (?, ?, ?)`)
-    const [respsta] = await connection.execute(query, [clienteId, ativoId, qtdeAtivo]);
-    return { code: 201, message: 'Compra realizada' }
+    const query = (`INSERT INTO Investimentos.carteira_ativos (cliente_id, ativo_id, qtdeAtivo) 
+    VALUES (?, ?, ?)`);
+    await connection.execute(query, [clienteId, ativoId, qtdeAtivo]);
+    return { code: 201, message: 'Compra realizada' };
 };
 
 const postVendaModel = async (codAtivo, codCliente, qtdeAtivoVenda) => {
@@ -68,17 +71,19 @@ const postVendaModel = async (codAtivo, codCliente, qtdeAtivoVenda) => {
     await connection.execute(`UPDATE Investimentos.carteira_ativos
     SET qtdeAtivo = (qtdeAtivo - (?))
     WHERE carteira_ativos_id = (?)`, [qtdeAtivoVenda, carteiraAtivoId]);
-    return { code: 201, message: 'Venda realizada' }
+    return { code: 201, message: 'Venda realizada' };
 };
 
 const putSaldoCliente = async (custo, codCliente) => {
     const idCliente = await getIdCliente(codCliente);
-    const x = await connection.execute(`UPDATE Investimentos.carteiras AS carteira SET saldo = (saldo - (?)) WHERE carteira.cliente_id = (?)`, [custo, idCliente]);
+    await connection.execute(`UPDATE Investimentos.carteiras AS carteira
+     SET saldo = (saldo - (?)) WHERE carteira.cliente_id = (?)`, [custo, idCliente]);
 };
 
 const pustSaldoCLienteVenda = async (custo, codCliente) => {
     const idCliente = await getIdCliente(codCliente);
-    const x = await connection.execute(`UPDATE Investimentos.carteiras AS carteira SET saldo = (saldo + (?)) WHERE carteira.cliente_id = (?)`, [custo, idCliente]);
+    await connection.execute(`UPDATE Investimentos.carteiras AS carteira 
+    SET saldo = (saldo + (?)) WHERE carteira.cliente_id = (?)`, [custo, idCliente]);
 };
 
 module.exports = {
@@ -90,4 +95,4 @@ module.exports = {
     getValorAtivo,
     getSaldoCliente,
     getQtdeAtivoCliente,
-}
+};

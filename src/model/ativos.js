@@ -1,7 +1,8 @@
 const connection = require('./connection');
 
 const getAtivosByCod = async (codAtivo) => {
-    const queryAtivos = (`SELECT codAtivo, qtdeAtivo, valor FROM Investimentos.ativos WHERE codAtivo = (?)`)
+    const queryAtivos = (`SELECT codAtivo, qtdeAtivo, valor
+     FROM Investimentos.ativos WHERE codAtivo = (?)`);
     const [getAtivos] = await connection.execute(queryAtivos, [codAtivo]);
     return getAtivos[0];
 };
@@ -18,11 +19,10 @@ const getAtivosByCliente = async (codCliente) => {
     INNER JOIN Investimentos.ativos AS atv ON atv.ativo_id = catv.ativo_id
     WHERE clt.codCliente = (?)`);
     const [getAtivoClientes] = await connection.execute(queryAtivoCliente, [codCliente]);
-    return getAtivoClientes;
-    
+    return getAtivoClientes;    
 };
 
 module.exports = { 
     getAtivosByCod,
-    getAtivosByCliente
+    getAtivosByCliente,
  };

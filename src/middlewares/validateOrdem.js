@@ -11,8 +11,8 @@ const ordemSchema = Joi.object({
     }),
     qtdeAtivo: Joi.number().min(1).required().messages({
         'string.min': '"qtdeAtivo" has to be greater than 0',
-        'number.required': '"qtdeAtivo" is required'
-    })
+        'number.required': '"qtdeAtivo" is required',
+    }),
 });
 
 const validaOrdem = (req, _res, next) => {

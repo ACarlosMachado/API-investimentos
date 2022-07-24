@@ -7,8 +7,8 @@ const contaSchema = Joi.object({
     }),
     valor: Joi.number().min(1).required().messages({
         'number.min': '"valor" has to be greater than 0',
-        'number.required': '"valor" is required'
-    })
+        'number.required': '"valor" is required',
+    }),
 });
 
 const validaConta = (req, _res, next) => {
