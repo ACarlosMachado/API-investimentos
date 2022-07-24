@@ -2,7 +2,7 @@ version: '3'
 
 services:
   backend:
-    build: ./
+    build: ./Dockerfile
     container_name: dasafio-xp
     ports:
     - 3000:3000
