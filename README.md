@@ -2,7 +2,7 @@
 
 ## Descrição do projeto
 
-API que permite listar ações disponíveis, realizar ordens de compra e venda de ações; e, também, verificar o saldo e realizar saque e deposito na conta da pessoa cliente.
+API que permite listar ações disponíveis, realizar ordens de compra e venda de ações; e, também, verificar o saldo e realizar saque e depósito na conta da pessoa cliente.
 
 Uma API é do tipo RESTful que utiliza Express(Node.js), a arquitetura MSC (model-service-controller) e banco de dados MYSQL.   
 
