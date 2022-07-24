@@ -8,6 +8,11 @@ services:
     - 3000:3000
     depends_on:
       - db
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db
+      PORT: '3001'
     restart: always
   db:
     container_name: Investimentos_DB

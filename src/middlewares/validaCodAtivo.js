@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const ativoSchema = Joi.string().min(5).required().messages({
+const ativoSchema = Joi.string().min(4).required().messages({
         'string.min': '"codAtivo" length must be at least 5 characters long',
         'string.required': '"codAtivo" is required',
     });
