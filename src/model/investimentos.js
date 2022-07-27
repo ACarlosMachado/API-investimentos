@@ -22,8 +22,8 @@ const getIdAtivo = async (codAtivo) => {
 
 const getIdCarteiraAtivo = async (clienteId, ativoId) => {
     const [result] = await connection.execute(`SELECT carteira_ativos_id AS id
-     FROM Investimentos.carteira_ativos WHERE cliente_id = (?) AND ativo_id = (?)`, 
-     [clienteId, ativoId]);
+    FROM Investimentos.carteira_ativos WHERE cliente_id = (?) AND ativo_id = (?)`, 
+    [clienteId, ativoId]);
      const { id } = result[0];
      return id;
 };
@@ -67,7 +67,7 @@ const postCompraModel = async (codAtivo, codCliente, qtdeAtivo) => {
 const postVendaModel = async (codAtivo, codCliente, qtdeAtivoVenda) => {
     const clienteId = await getIdCliente(codCliente);
     const ativoId = await getIdAtivo(codAtivo);
-    const carteiraAtivoId = await getIdCarteiraAtivo(ativoId, clienteId);
+    const carteiraAtivoId = await getIdCarteiraAtivo(clienteId, ativoId);
     await connection.execute(`UPDATE Investimentos.carteira_ativos
     SET qtdeAtivo = (qtdeAtivo - (?))
     WHERE carteira_ativos_id = (?)`, [qtdeAtivoVenda, carteiraAtivoId]);

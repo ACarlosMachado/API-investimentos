@@ -5,7 +5,7 @@ const postLoginService = async (req) => {
     try {
         const { email, senha } = req.body;
         const verificaCliente = await getCliente(email, senha);
-        if (verificaCliente === []) {
+        if (verificaCliente.length === 0) {
             return { code: 404, message: 'Dados inválidos' };
         }
         const token = await createToken(email, senha);

@@ -3,7 +3,7 @@ version: '3'
 services:
   backend:
     build: ./Dockerfile
-    container_name: dasafio-xp
+    container_name: desafio-xp
     ports:
     - 3000:3000
     depends_on:
