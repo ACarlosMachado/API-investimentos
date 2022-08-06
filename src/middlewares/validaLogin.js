@@ -5,8 +5,8 @@ const loginSchema = Joi.object({
         'string.required': '"email" is required',
     }),
     senha: Joi.string().min(6).required().messages({
-        'number.min': '"senha" has to be greater than 5',
-        'number.required': '"senha" is required',
+        'string.min': '"senha" has to be greater than 5',
+        'string.required': '"senha" is required',
     }),
 });
 
