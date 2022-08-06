@@ -2,9 +2,9 @@
 
 ## Descrição do projeto
 
-Uma API que gerencia: listagem, compra e vendas de ações, além de operações de saque e depósito na conta do cliente.
+API que permite listar ações disponíveis, realizar ordens de compra e venda de ações; e, também, verificar o saldo e realizar saque e depósito na conta da pessoa cliente.
 
-A API é do tipo RESTful e utiliza Express(Node.js), a arquitetura MSC (model-service-controller) e banco de dados MYSQL.   
+Uma API é do tipo RESTful que utiliza Express(Node.js), a arquitetura MSC (model-service-controller) e banco de dados MYSQL.   
 
 ## Funcionalidades
 
@@ -13,3 +13,21 @@ A API é do tipo RESTful e utiliza Express(Node.js), a arquitetura MSC (model-se
 - Listagem de ações na carteira do cliente e quantidade e valor;
 - Ordem de compra e venda de ações;
 - Saque e depósito na conta do cliente;
+
+## Executando a aplicação
+
+- Clone o repositório: `git clone git@github.com:ACarlosMachado/desafio-tecnico-xp.git`
+- Entre no diretório: `cd desafio-tecnico-xp/`
+- Instale as dependências: `npm install`
+- Execute o docker: `docker-compose up -d`
+- Execute o script de Investimentos.sql no workbench
+- Execute a aplicação: `npm run debug` ou `npm start`
+
+## Ferramentas e tecnologias utilizadas no desenvolvimento
+- Express (node.js);
+- Nodemon;
+- Joi (validador de dados para JavaScript);
+- JWT (criação e validação de token);
+- Eslint;
+- Mysql;
+- Docker;
