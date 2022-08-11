@@ -9,5 +9,8 @@
         "sourceType": "module"
     },
     "rules": {
+        "mocha/no-mocha-arrows": "off",
+        "mocha/max-top-level-suites": "off",
+        "mocha/no-hooks-for-single-case": "off"
     }
 }

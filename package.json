@@ -7,7 +7,7 @@
     "start": "node ./src/index.js",
     "debug": "nodemon ./src/index.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js, .jsx",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./tests/**/*.test.js --exit -t 999999"
   },
   "repository": {
     "type": "git",
@@ -21,12 +21,19 @@
   },
   "homepage": "https://github.com/ACarlosMachado/desafio-tecnico-xp#readme",
   "devDependencies": {
+    "@types/chai": "^4.3.3",
+    "@types/mocha": "^9.1.1",
+    "@types/sinon": "^10.0.13",
+    "chai": "^4.3.6",
     "eslint": "^8.20.0",
     "eslint-plugin-sonarjs": "^0.14.0",
-    "nodemon": "^2.0.19"
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.19",
+    "sinon": "^14.0.0"
   },
   "dependencies": {
     "@types/mysql": "^2.15.21",
+    "chai-as-promised": "^7.1.1",
     "dotenv": "^16.0.1",
     "eslint-config-trybe-backend": "^1.0.4",
     "express": "^4.18.1",
