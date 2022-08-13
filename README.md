@@ -1,4 +1,4 @@
-# Desafio Técnico XP
+# API - Investimentos
 
 ## Descrição do projeto
 
